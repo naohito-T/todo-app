@@ -1,24 +1,37 @@
 <template>
   <div class="todo">
     <h1>TODO APP</h1>
-    <div class="create">
-      <div class="title">
-        <label for="todo_create">Title:</label>
-        <input id="todo_create" type="text" v-model="state.title">
-        <button @click="createTodo">Create</button>
+
+    <div class="w-2/3 m-auto">
+      <div class="grid grid-flow-row grid-cols-3">
+        <div class="m-4 px-3 py-2 bg-gray-700 rounded-md shadow">
+          <div class="flex flex-wrap content-center h-12">
+            <div class="text-left flex-grow-1">
+              <input
+                v-model="state.title"
+                type="text"
+                class="w-full px-2 py-1 bg-gray-700 border border-gray-400 rounded-md focus:outline-none"
+                placeholder="Title"
+              />
+            </div>
+          </div>
+          <div class="flex flex-wrap content-center justify-end h-12">
+            <div
+              class="w-1/4 py-1 text-blue-500 rounded-md cursor-pointer hover:text-blue-700 bg-gray-200 font-bold border-2 border-blue-500"
+              @click="createTodo"
+            >
+              Create
+            </div>
+          </div>
+        </div>
+        <todo-item
+          v-for="item in state.todos"
+          :key="item.uuid"
+          :todo="item"
+          @update="updateTodo"
+          @delete="deleteTodo"
+        ></todo-item>
       </div>
-    </div>
-    <div v-for="todo in state.todos" :key="todo.uuid">
-      <!-- <div class="title margin-r1">Title: {{ todo.title }}</div> -->
-      <input type="text" class="margin-r1" v-model="todo.title">
-      <!-- <div class="status margin-r1">Status: {{ todo.status }}</div> -->
-      <select class="margin-r1" v-model="todo.status">
-        <option value="todo">TODO</option>
-        <option value="wip">WIP</option>
-        <option value="down">DONE</option>
-      </select>
-      <button class="update margin-r1" @click="updateTodo(todo)">Update</button>
-      <button class="delete margin-r1" @click="deleteTodo(todo)">Delete</button>
     </div>
   </div>
 </template>
@@ -26,6 +39,7 @@
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
 import axios from 'axios';
+import TodoItem from '../components/TodoItem.vue';
 
 const baseURL = 'http://localhost:3000/';
 
@@ -37,6 +51,7 @@ type Todo = {
 
 export default defineComponent({
   name: "Todo",
+  components: { TodoItem },
   setup() {
     const state = reactive({
       title: '',

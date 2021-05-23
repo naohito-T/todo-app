@@ -8,12 +8,17 @@
 </template>
 
 <style lang="scss">
+// @applyはtailwindの文法。その後ろに指定したclassにあたるstyleを適応してくれる。
+
+body {
+  @apply bg-gray-800;
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  @apply text-font-color;
 }
 
 #nav {
@@ -21,7 +26,6 @@
 
   a {
     font-weight: bold;
-    color: #2c3e50;
 
     &.router-link-exact-active {
       color: #42b983;
