@@ -57,7 +57,7 @@ export default defineComponent({
     const state = {
       task: JSON.parse(JSON.stringify(props.todo)),
     };
-
+  // <template> で使う値・関数は必ず、setup()のreturnでオブジェクトとして返すこと。
     return {
       state,
     };
